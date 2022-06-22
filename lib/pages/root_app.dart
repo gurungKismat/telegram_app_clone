@@ -1,5 +1,7 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:telegram_app_clone/pages/contact_page.dart';
 
 import 'package:telegram_app_clone/theme/colors.dart';
 
@@ -16,8 +18,24 @@ class _RootAppState extends State<RootApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: bgColor,
       bottomNavigationBar: getFooter(),
+      body: getBody(),
+    );
+  }
+
+  Widget getBody() {
+    return IndexedStack(
+      index: pageIndex,
+      children: const [
+        ContactPage(),
+        Center(
+          child: Text('Chats'),
+        ),
+        Center(
+          child: Text('Settings'),
+        ),
+      ],
     );
   }
 
@@ -43,27 +61,49 @@ class _RootAppState extends State<RootApp> {
             children: List.generate(
               3,
               (index) {
-                return Column(
-                  children: [
-                    Icon(
-                      iconsItem[index],
-                      size: 30,
-                      color:
-                          pageIndex == index ? primary : white.withOpacity(0.5),
-                    ),
-                    const SizedBox(
-                      height: 4.0,
-                    ),
-                    Text(
-                      iconsLabel[index],
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: pageIndex == index
-                            ? primary
-                            : white.withOpacity(0.5),
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      pageIndex = index;
+                    });
+                  },
+                  child: Column(
+                    children: [
+                      index == 1
+                          ? Badge(
+                              badgeContent: const Text(
+                                '3',
+                                style: TextStyle(color: white),
+                              ),
+                              child: Icon(
+                                iconsItem[index],
+                                size: 30,
+                                color: pageIndex == index
+                                    ? primary
+                                    : white.withOpacity(0.5),
+                              ),
+                            )
+                          : Icon(
+                              iconsItem[index],
+                              size: 30,
+                              color: pageIndex == index
+                                  ? primary
+                                  : white.withOpacity(0.5),
+                            ),
+                      const SizedBox(
+                        height: 4.0,
                       ),
-                    ),
-                  ],
+                      Text(
+                        iconsLabel[index],
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: pageIndex == index
+                              ? primary
+                              : white.withOpacity(0.5),
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
             )),
