@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:telegram_app_clone/json/contact_json.dart';
 import 'package:telegram_app_clone/theme/colors.dart';
 
 class ContactPage extends StatefulWidget {
@@ -97,11 +98,66 @@ Widget getBody() {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10.0,
-        ),
+        const SizedBox(height: 10.0),
         getSectionIcons(),
+        getContactList(),
       ],
+    ),
+  );
+}
+
+Widget getContactList() {
+  return Padding(
+    padding: const EdgeInsets.only(left: 10.0),
+    child: Column(
+      children: List.generate(
+        10,
+        (index) {
+          return Column(
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      contact_data[index]['img'],
+                    ),
+                  ),
+                  const SizedBox(width: 12.0),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        contact_data[index]['name'],
+                        style: const TextStyle(
+                          color: white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 2.0),
+                      Text(
+                          contact_data[index]['is_online']
+                              ? 'Online'
+                              : contact_data[index]['seen'],
+                          style: TextStyle(
+                            color: contact_data[index]['is_online']
+                                ? primary
+                                : white.withOpacity(0.5),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                          )),
+                    ],
+                  )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50.0),
+                child: Divider(thickness: 1, color: white.withOpacity(0.15)),
+              ),
+            ],
+          );
+        },
+      ),
     ),
   );
 }
@@ -130,7 +186,9 @@ Widget getSectionIcons() {
                   size: 28,
                   color: primary,
                 ),
-                const SizedBox(width: 20.0,),
+                const SizedBox(
+                  width: 20.0,
+                ),
                 Text(
                   icons[index]['label'],
                   style: const TextStyle(
