@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:telegram_app_clone/theme/colors.dart';
 
 class ContactPage extends StatefulWidget {
@@ -74,7 +75,8 @@ Widget getBody() {
                 Container(
                   height: 38.0,
                   decoration: BoxDecoration(
-                      color: bgColor, borderRadius: BorderRadius.circular(10.0)),
+                      color: bgColor,
+                      borderRadius: BorderRadius.circular(10.0)),
                   child: TextField(
                     cursorColor: primary,
                     style: const TextStyle(color: white),
@@ -95,8 +97,60 @@ Widget getBody() {
             ),
           ),
         ),
-        
+        const SizedBox(
+          height: 10.0,
+        ),
+        getSectionIcons(),
       ],
+    ),
+  );
+}
+
+Widget getSectionIcons() {
+  List icons = [
+    {
+      'icon': LineIcons.mapMarker,
+      'label': 'Find People Nearby',
+    },
+    {
+      'icon': LineIcons.userPlus,
+      'label': 'Invite Friends',
+    },
+  ];
+  return Padding(
+    padding: const EdgeInsets.only(left: 10.0),
+    child: Column(
+      children: List.generate(icons.length, (index) {
+        return Column(
+          children: [
+            Row(
+              children: [
+                Icon(
+                  icons[index]['icon'],
+                  size: 28,
+                  color: primary,
+                ),
+                const SizedBox(width: 20.0,),
+                Text(
+                  icons[index]['label'],
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: primary,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 50.0),
+              child: Divider(
+                thickness: 1.0,
+                color: white.withOpacity(0.15),
+              ),
+            ),
+          ],
+        );
+      }),
     ),
   );
 }
