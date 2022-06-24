@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:telegram_app_clone/pages/chat_page.dart';
 import 'package:telegram_app_clone/pages/contact_page.dart';
 
 import 'package:telegram_app_clone/theme/colors.dart';
@@ -13,7 +14,7 @@ class RootApp extends StatefulWidget {
 }
 
 class _RootAppState extends State<RootApp> {
-  int pageIndex = 0;
+  int pageIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +30,7 @@ class _RootAppState extends State<RootApp> {
       index: pageIndex,
       children: const [
         ContactPage(),
-        Center(
-          child: Text('Chats'),
-        ),
+        ChatPage(),
         Center(
           child: Text('Settings'),
         ),
